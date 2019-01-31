@@ -13,12 +13,12 @@ var pool = new pg.Pool(
 
 module.exports.fetchUserData = (async function(username, callback) {
     const client = await pool.connect()
-    await client.query(`SELECT * FROM users WHERE username = ${username};`, (err, results) => {
+    await client.query(`SELECT * FROM users WHERE username = '${username}';`, (err, results) => {
         if (err) {
             console.error("Error fetching rows from table: " + err);
             callback(err);
         }
-        callback(results.rows);
+        else callback(results.rows);
     });
     client.release();
 })
@@ -30,7 +30,7 @@ module.exports.fetchAllPosts = (async function(callback) {
             console.error("Error fetching rows from table: " + err);
             callback(err);
         }
-        callback(results.rows);
+        else callback(results.rows);
     });
     client.release();
 })
@@ -41,7 +41,7 @@ module.exports.fetchPostsByCategory = (async function(category, callback) {
             console.error("Error fetching rows from table: " + err);
             callback(err);
         }
-        callback(results.rows);
+        else callback(results.rows);
     });
     client.release();
 })
@@ -53,7 +53,7 @@ module.exports.addUser = (async function(username, name, email, callback) {
             console.error("Error Inserting values in table: " + err);
             callback(err);
         }
-        callback(results);
+        else callback(results);
     });
     client.release();
 })
@@ -65,7 +65,7 @@ module.exports.addPost = (async function(category, href, username, callback) {
             console.error("Error Inserting values in table: " + err);
             callback(err);
         }
-        callback(results);
+        else callback(results);
     });
     client.release();
 })
@@ -77,7 +77,7 @@ module.exports.makeFavourite = (async function(user_id, post_id, callback) {
             console.error("Error inserting rows into table: " + err);
             callback(err);
         }
-        callback(results.rows);
+        else callback(results.rows);
     });
     client.release();
 })
@@ -89,7 +89,7 @@ module.exports.getFavourites = (async function(user_id, callback) {
             console.error("Error fetching rows from table: " + err);
             callback(err);
         }
-        callback(results);
+        else callback(results.rows);
     });
     client.release();
 })
