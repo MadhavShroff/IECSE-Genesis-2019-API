@@ -13,7 +13,7 @@ var pool = new pg.Pool(
 
 (async function(){
     const client = await pool.connect()
-    await client.query('CREATE TABLE IF NOT EXISTS users(id UUID PRIMARY KEY DEFAULT gen_random_uuid(), username varchar(255), name varchar(255), email varchar(255));', (err, res) => {
+    await client.query('CREATE TABLE IF NOT EXISTS users(id UUID PRIMARY KEY DEFAULT gen_random_uuid(), username varchar(255), name varchar(255), email varchar(255), best_shot varchar(500), profile_pic varchar(500));', (err, res) => {
         if (err) {
             console.error("Error creating table: " + err);
         }

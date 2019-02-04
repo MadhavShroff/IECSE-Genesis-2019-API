@@ -16,6 +16,14 @@ app.post('/getUserDetails/', (req, res) => {
     })
 });
 
+app.get('/getAllUsers', (req, res) => {
+    console.log("GET: /getAllUsers")
+    res.setHeader('Content-Type', 'application/json');
+    db.fetchAllUsers( result => {
+        res.send(JSON.stringify(result, null, 3));
+    });
+});
+
 app.get('/getAllPosts', (req, res) => {
     console.log("GET: /getAllPosts")
     res.setHeader('Content-Type', 'application/json');
@@ -35,7 +43,7 @@ app.get('/getPosts/:category', (req, res) => {
 app.post('/addUser', (req, res) => {
     console.log("POST: /addUser")
     res.setHeader('Content-Type', 'application/json');
-    db.addUser(req.body.username, req.body.name, req.body.email, (result) => {
+    db.addUser(req.body.username, req.body.name, req.body.email, req.body.best_shot, req.body.profile_pic, (result) => {
         res.send(JSON.stringify(result, null, 3));
     })
 });

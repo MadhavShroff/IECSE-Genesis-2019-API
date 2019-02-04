@@ -17,10 +17,23 @@ module.exports.fetchUserData = (async function(username, callback) {
         if (err) {
             console.error("Error fetching rows from table: " + err);
             callback(err);
+        } else {
+            callback(results.rows);
         }
-        else callback(results.rows);
     });
     client.release();
+})
+
+module.exports.fetchAllUsers = (async function(callback) {
+    const client = await pool.connect()
+    await client.query(`SELECT * FROM users;`, (err, results) => {
+        if(err) {
+            console.log("Error fetching rows from table: " + err);
+            callback(err);
+        } else {
+            callback(results.rows);
+        }
+    })
 })
 
 module.exports.fetchAllPosts = (async function(callback) {
@@ -29,8 +42,9 @@ module.exports.fetchAllPosts = (async function(callback) {
         if (err) {
             console.error("Error fetching rows from table: " + err);
             callback(err);
+        } else {
+            callback(results.rows);
         }
-        else callback(results.rows);
     });
     client.release();
 })
@@ -40,20 +54,22 @@ module.exports.fetchPostsByCategory = (async function(category, callback) {
         if (err) {
             console.error("Error fetching rows from table: " + err);
             callback(err);
+        } else {
+            callback(results.rows);
         }
-        else callback(results.rows);
     });
     client.release();
 })
 
-module.exports.addUser = (async function(username, name, email, callback) {
+module.exports.addUser = (async function(username, name, email, best_shot, profile_pic, callback) {
     const client = await pool.connect()
-    await client.query(`INSERT INTO users (username, name, email) VALUES('${username}', '${name}', '${email}');`, (err, results) => {
+    await client.query(`INSERT INTO users (username, name, email, best_shot, profile_pic) VALUES('${username}', '${name}', '${email}', '${best_shot}', '${profile_pic}');`, (err, results) => {
         if (err) {
             console.error("Error Inserting values in table: " + err);
             callback(err);
+        } else {
+            callback(results);
         }
-        else callback(results);
     });
     client.release();
 })
@@ -64,8 +80,9 @@ module.exports.addPost = (async function(category, href, username, callback) {
         if (err) {
             console.error("Error Inserting values in table: " + err);
             callback(err);
+        } else {
+            callback(results);
         }
-        else callback(results);
     });
     client.release();
 })
@@ -76,8 +93,9 @@ module.exports.makeFavourite = (async function(user_id, post_id, callback) {
         if (err) {
             console.error("Error inserting rows into table: " + err);
             callback(err);
+        } else {
+            callback(results.rows);
         }
-        else callback(results.rows);
     });
     client.release();
 })
@@ -88,8 +106,9 @@ module.exports.getFavourites = (async function(user_id, callback) {
         if (err) {
             console.error("Error fetching rows from table: " + err);
             callback(err);
+        } else {
+            callback(results.rows);
         }
-        else callback(results.rows);
     });
     client.release();
 })
