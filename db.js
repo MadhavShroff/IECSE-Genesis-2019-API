@@ -24,6 +24,19 @@ module.exports.fetchUserData = (async function(username, callback) {
     client.release();
 })
 
+module.exports.fetchPostsByUser = (async function(username, callback) {
+    const client = await pool.connect()
+    await client.query(`SELECT * FROM media WHERE published_by = '${username}';`, (err, results) => {
+        if (err) {
+            console.error("Error fetching rows from table: " + err);
+            callback(err);
+        } else {
+            callback(results.rows);
+        }
+    });
+    client.release();
+})
+
 module.exports.fetchAllUsers = (async function(callback) {
     const client = await pool.connect()
     await client.query(`SELECT * FROM users;`, (err, results) => {

@@ -32,6 +32,14 @@ app.get('/getAllPosts', (req, res) => {
     })
 });
 
+app.get('/getPostsByUser', (req, res) => {
+    console.log("GET: /getPostsByUser")
+    res.setHeader('Content-Type', 'application/json');
+    db.fetchPostsByUser(req.body.username, (result) => {
+        res.send(JSON.stringify(result, null, 3));
+    })
+});
+
 app.get('/getPosts/:category', (req, res) => {
     console.log(`GET: /getPosts/${req.params.category}`)
     res.setHeader('Content-Type', 'application/json');
