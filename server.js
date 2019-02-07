@@ -32,7 +32,7 @@ app.get('/getAllPosts', (req, res) => {
     })
 });
 
-app.get('/getPostsByUser', (req, res) => {
+app.post('/getPostsByUser', (req, res) => {
     console.log("GET: /getPostsByUser")
     res.setHeader('Content-Type', 'application/json');
     db.fetchPostsByUser(req.body.username, (result) => {
